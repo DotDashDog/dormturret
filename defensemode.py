@@ -27,7 +27,7 @@ def update_encodings(whitelist_dir):
         enc = face_recognition.api.face_encodings(img)
         if len(enc) != 1:
             raise ValueError(f"More than one face found in {f} while generating encodings")
-        encodings.append(enc)
+        encodings.append(enc[0])
 
     new_state = {"encodings" : encodings,
                  "mtime" : os.path.getmtime(whitelist_dir)}
@@ -64,6 +64,6 @@ enc1 = face_recognition.api.face_encodings(image1)[0]
 
 # %%
 
-print(face_recognition.api.face_distance(whitelist_encs, enc1))
+face_recognition.api.face_distance(whitelist_encs, enc1)
 
 # %%

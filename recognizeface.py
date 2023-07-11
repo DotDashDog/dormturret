@@ -20,3 +20,5 @@ enc2 = face_recognition.api.face_encodings(image2)[0]
 # %%
 
 print(face_recognition.api.face_distance([enc1], enc2))
+
+# %%
