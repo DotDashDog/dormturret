@@ -15,7 +15,7 @@ objp = []
 for y in range(board_y):
     for x in range(board_x):
         objp.append([x, y, 0])
-objp = np.array(objp)
+objp = np.array(objp, dtype=np.float32)
 #%%
 
 objpoints = []
@@ -42,6 +42,11 @@ for fname in images:
         cv.imshow('img', img)
         cv.waitKey(500)
 
+objpoints = np.array(objpoints)
+imgpoints = np.array(imgpoints)
+
+cv.destroyAllWindows()
+
 #%%
 
 #* ret : ???
@@ -52,12 +57,43 @@ for fname in images:
 
 ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
+#? There's an improved camera matrix I can calculate. IDK if I need it. See tutorial
+
 #%%
 
 #* Instead of undistorting the whole image, I can just undistort the points that I need
 
 n_points = 10
 testpoints = np.zeros((n_points, 1, 2), dtype=np.float32)
-xy_undistorted = cv.undistortPoints(testpoints, mtx, dist)
+xy_undistorted = np.squeeze(cv.undistortPoints(testpoints, mtx, dist))
+
+# %%
+#! No clue if the W dimension should be 1 or not. Reddit says it should be 1
+homogeneous_points = np.append(xy_undistorted, np.ones((xy_undistorted.shape[0], 1)), axis=1)
+
+inv_mtx = np.linalg.inv(mtx)
+
+out_pts = (inv_mtx @ homogeneous_points.T).T
+
+
+# %%
+
+def unit_vecs(vecs):
+    return vecs/np.concatenate(3*[[np.linalg.norm(vecs, axis=1)]], axis=0).T
+
+def alt_az(vecs):
+    rays = unit_vecs(vecs)
+    out = []
+    for i in range(len(rays)):
+        x = rays[i, 0]
+        y = rays[i, 1]
+        z = rays[i, 2]
+
+        out.append([np.arctan(x/z), np.arctan(y/z)])
+
+    return np.array(out)
+
+alt_az(out_pts)
+    
 
 # %%
