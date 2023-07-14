@@ -3,6 +3,12 @@ import cv2 as cv
 import numpy as np
 import glob
 
+image_x = 1920
+image_y = 1080
+
+center_x = image_x/2
+center_y = image_y/2
+
 board_x = 7
 board_y = 7
 
@@ -58,15 +64,20 @@ cv.destroyAllWindows()
 #* rvecs : rotation vectors
 #* tvecs : translation vectors
 
+mtx = np.array([])
+
 ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
+#* Characteristics obtained from calibration
+fovx, fovy, focalLength, principalPoint, aspectRatio = cv.calibrationMatrixValues(mtx, (image_x, image_y), 6.058, 4.415)
+fovdiag = np.sqrt(fovx**2, fovy**2)
 #? There's an improved camera matrix I can calculate. IDK if I need it. See tutorial
 
 #%%
 
 #* Instead of undistorting the whole image, I can just undistort the points that I need
 
-testpoints = np.array([[[0, 0]], [[1920, 1080]]], dtype=np.float32)
+testpoints = np.array([[[0, 0]], [[center_x, center_y]], [[image_x, image_y]]], dtype=np.float32)
 xy_undistorted = np.squeeze(cv.undistortPoints(testpoints, mtx, dist))
 
 #! What should W be? I think it should be 1, but idk
