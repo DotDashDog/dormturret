@@ -14,7 +14,7 @@ objp = []
 
 for y in range(board_y):
     for x in range(board_x):
-        objp.append([x, y, 0]) #! Changed!!!
+        objp.append([x, y, 0])
 objp = np.array(objp, dtype=np.float32)
 #%%
 
@@ -69,8 +69,8 @@ ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.sha
 testpoints = np.array([[[0, 0]], [[1920, 1080]]], dtype=np.float32)
 xy_undistorted = np.squeeze(cv.undistortPoints(testpoints, mtx, dist))
 
-#! No clue if the W dimension should be 1 or not. Reddit says it should be 1
-homogeneous_points = np.append(xy_undistorted, np.ones((xy_undistorted.shape[0], 1)), axis=1)
+#! What should W be? I think it should be 1, but idk
+homogeneous_points = np.append(xy_undistorted, 1*np.ones((xy_undistorted.shape[0], 1)), axis=1)
 
 # inv_mtx = np.linalg.inv(mtx)
 
