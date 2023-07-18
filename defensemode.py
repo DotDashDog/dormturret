@@ -3,102 +3,67 @@ import face_recognition
 import os
 import numpy as np
 import pickle
-
-whitelist_dir = "face_whitelist"
-state_file = "whitelist_state.pkl"
-
-#%%
-
-def listdir_nohidden(path):
-    #* ignores all files beginning with "."
-    a = []
-    for f in os.listdir(path):
-        if not f.startswith("."):
-            a.append(f)
-    return a
-
-def whitelistupdated(whitelist_dir, prev_state):
-    return os.path.getmtime(whitelist_dir) != prev_state["mtime"]
-
-def update_encodings(whitelist_dir):
-    encodings = []
-    for f in listdir_nohidden(whitelist_dir):
-        img = face_recognition.load_image_file(os.path.join(whitelist_dir, f))
-        enc = face_recognition.api.face_encodings(img)
-        if len(enc) != 1:
-            raise ValueError(f"More than one face found in {f} while generating encodings")
-        encodings.append(enc[0])
-
-    new_state = {"encodings" : encodings,
-                 "mtime" : os.path.getmtime(whitelist_dir)}
-    
-    with open(state_file, "wb") as f:
-        pickle.dump(new_state, f)
-
-    return new_state
-
-def latest_whitelist_encodings(whitelist_dir, state_file):
-    if os.path.exists(state_file):
-        with open(state_file, "rb") as f:
-            state = pickle.load(f)
-        
-        if whitelistupdated(whitelist_dir, state):
-            print("Updating encodings")
-            state = update_encodings(whitelist_dir)
-
-    else:
-        print("Creating new encoding file")
-        state = update_encodings(whitelist_dir)
-    
-    return state["encodings"]
+from turret_helper import *
 
 
 #%%
 #* Load whitelist encodings, updating (with a few runs of the model) if necessary
 whitelist_encs = latest_whitelist_encodings(whitelist_dir, state_file)
 
+#* Load camera characteristics
+with open(camera_file, "rb") as f:
+    camera_state = pickle.load(f)
+
+arduino = Arduino(9600)
+
 #%%
-#* Load the image to evaluate
-fov = face_recognition.load_image_file(os.path.join("test_images", "bidenpelosi1.jpeg"))
 
-locations = face_recognition.api.face_locations(
-    fov,
-    number_of_times_to_upsample=3, #* 1 is default, higher finds smaller faces. Tuning needed
-    model="hog", #* Options: "hog" (faster on cpu, less accurate), "cnn" (faster on gpu, more accurate)
-)
+while True:
+    #* Load the image to evaluate
+    fov = face_recognition.load_image_file(os.path.join("test_images", "bidenpelosi1.jpeg"))
 
-#* Location is a tuple in the format (top, right, bottom, left) (bounding box)
+    locations = face_recognition.api.face_locations(
+        fov,
+        number_of_times_to_upsample=1, #* 1 is default, higher finds smaller faces. Tuning needed
+        model="hog", #* Options: "hog" (faster on cpu, less accurate), "cnn" (faster on gpu, more accurate)
+    )
 
-face_encodings = face_recognition.api.face_encodings(fov, locations)
-print(f"{len(face_encodings)} faces detected.")
+    #* Location is a tuple in the format (top, right, bottom, left) (bounding box)
+
+    face_encodings = face_recognition.api.face_encodings(fov, locations)
+    print(f"{len(face_encodings)} faces detected.")
 
 
-# %%
+    targets = []
+    for i, face in enumerate(face_encodings):
+        box = locations[i]
+        if not isWhitelisted(face, whitelist_encs):
+            print(f"Target found. Face center at {faceCenter(box)}")
+            targets.append(box)
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+    box = targets[0]
 
-ax = plt.gca()
+    faceLoc = faceCenter(box)
 
-ax.imshow(fov)
+    targetLoc = faceLoc + np.array([0, 2.5*height(box)])
 
-def isWhitelisted(encoding, whitelist_encodings):
-    distances = face_recognition.api.face_distance(whitelist_encodings, encoding)
-    return np.any(distances < 0.6)
+    # import matplotlib.pyplot as plt
+    # import matplotlib.patches as patches
 
-def faceCenter(box):
-    return (box[1] + box[3])/2, (box[0] + box[2])/2 
+    # ax = plt.gca()
 
-for i, face in enumerate(face_encodings):
-    box = locations[i]
-    if not isWhitelisted(face, whitelist_encs):
-        #* Add box around face
-        rect = patches.Rectangle((box[3], box[2]), box[1]-box[3], box[0]-box[2], linewidth=1, edgecolor='r', facecolor='none')
-        print(f"Target found. Face center at {faceCenter(box)}")
-    else:
-        rect = patches.Rectangle((box[3], box[2]), box[1]-box[3], box[0]-box[2], linewidth=1, edgecolor='g', facecolor='none')
-        print(f"Non-Target found. Face center at {faceCenter(box)}")
-    ax.add_patch(rect)
+    # ax.imshow(fov)
 
-plt.show()
+    # #* Add box around face
+    # rect = patches.Rectangle((box[3], box[2]), box[1]-box[3], box[0]-box[2], linewidth=1, edgecolor='r', facecolor='none')
+    # ax.plot(*targetLoc, marker="v", color="red")
+    # ax.add_patch(rect)
+    # print(f"Target found. Face center at {faceCenter(box)}")
+
+    # plt.show()
+
+    target_angle = pixel_to_angle(np.array([targetLoc]), camera_state["mtx"], camera_state["dist"])[0]
+    arduino.point(arduino.direction + target_angle)
+
+
 # %%

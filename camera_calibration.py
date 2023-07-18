@@ -2,6 +2,8 @@
 import cv2 as cv
 import numpy as np
 import glob
+import pickle
+from turret_helper import *
 
 image_x = 1920
 image_y = 1080
@@ -12,6 +14,14 @@ center_y = image_y/2
 board_x = 7
 board_y = 7
 
+efl_mm =1.6 #1.95
+
+sensor_w_mm = 6.058
+sensor_h_mm = 4.415
+
+pixel_size_mm = 2.9 * 10**(-3)
+efl_px = efl_mm/pixel_size_mm
+
 # termination criteria
 criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
@@ -21,7 +31,7 @@ objp = []
 for y in range(board_y):
     for x in range(board_x):
         objp.append([x, y, 0])
-objp = np.array(objp, dtype=np.float32)
+objp = 2 * np.array(objp, dtype=np.float32)
 #%%
 
 objpoints = []
@@ -64,46 +74,43 @@ cv.destroyAllWindows()
 #* rvecs : rotation vectors
 #* tvecs : translation vectors
 
-mtx = np.array([])
+spec_mtx = np.array([
+    [efl_px,   0,      image_x/2],
+    [0,        efl_px, image_y/2],
+    [0,        0,      1        ]
+])
 
-ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
+#calib_flags = cv.CALIB_USE_INTRINSIC_GUESS + cv.CALIB_FIX_FOCAL_LENGTH + cv.CALIB_FIX_ASPECT_RATIO + cv.CALIB_FIX_PRINCIPAL_POINT
+
+ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], spec_mtx, None) #flags=calib_flags
 
 #* Characteristics obtained from calibration
-fovx, fovy, focalLength, principalPoint, aspectRatio = cv.calibrationMatrixValues(mtx, (image_x, image_y), 6.058, 4.415)
-fovdiag = np.sqrt(fovx**2, fovy**2)
-#? There's an improved camera matrix I can calculate. IDK if I need it. See tutorial
+fovx, fovy, focalLength, principalPoint, aspectRatio = cv.calibrationMatrixValues(mtx, (image_x, image_y), sensor_w_mm, sensor_h_mm)
+fovdiag = np.rad2deg(2*np.arccos(np.cos(np.deg2rad(fovx)/2) * np.cos(np.deg2rad(fovy)/2)))
+
+
+print("X FOV:", fovx, ", Y FOV:", fovy, ", Diagonal FOV:", fovdiag)
+
+with open(camera_file, "wb") as f:
+    pickle.dump({"mtx": mtx, "dist": dist}, f)
+
 
 #%%
 
+with open(camera_file, "rb") as f:
+    camera_state = pickle.load(f)
+
 #* Instead of undistorting the whole image, I can just undistort the points that I need
 
-testpoints = np.array([[[0, 0]], [[center_x, center_y]], [[image_x, image_y]]], dtype=np.float32)
-xy_undistorted = np.squeeze(cv.undistortPoints(testpoints, mtx, dist))
+testpoints = np.array([[0, 0], [center_x, center_y], [image_x, image_y]], dtype=np.float32)
+
+print(pixel_to_angle(testpoints, camera_state["mtx"], camera_state["dist"]))
 
 #! What should W be? I think it should be 1, but idk
-homogeneous_points = np.append(xy_undistorted, 1*np.ones((xy_undistorted.shape[0], 1)), axis=1)
 
 # inv_mtx = np.linalg.inv(mtx)
 
 # out_pts = (inv_mtx @ homogeneous_points.T).T #! DON'T NEED THIS, INTERNET LIES!!! cv.undistortpoints already does this
-out_pts = homogeneous_points
-
-def unit_vecs(vecs):
-    return vecs/np.concatenate(3*[[np.linalg.norm(vecs, axis=1)]], axis=0).T
-
-def alt_az(vecs):
-    rays = unit_vecs(vecs)
-    out = []
-    for i in range(len(rays)):
-        x = rays[i, 0]
-        y = rays[i, 1]
-        z = rays[i, 2]
-
-        out.append([np.arctan(x/z), np.arctan(y/z)])
-
-    return np.array(out)
-
-alt_az(out_pts)
     
 
 
