@@ -3,6 +3,8 @@ import os
 import numpy as np
 import pickle
 import cv2 as cv
+import serial #! Won't work when on normal computer
+import time
 
 whitelist_dir = "face_whitelist"
 state_file = "whitelist_state.pkl"
@@ -97,12 +99,20 @@ class Arduino:
         self.minAngle = np.array([0, 50])
         self.maxAngle = np.array([180, 130])
         #* RasPi communication code here
-        pass
+        self.ser = serial.Serial(
+            port='/dev/ttyS0', 
+            baudrate = 9600,
+            parity = serial.PARITY_NONE,
+            stopbits = serial.STOPBITS_ONE,
+            bytesize = serial.EIGHTBITS,
+            timeout = 1
+        )
 
     def point(self, newDirection):
         self.direction = newDirection
         #* RasPi communication code here
+        self.ser.write(f"[POINT COMMAND] X{newDirection[0]} Y{newDirection[1]}")
     
     def fire(self):
         #* RasPi communication code here
-        pass
+        self.ser.write(f"[FIRE COMMAND]")

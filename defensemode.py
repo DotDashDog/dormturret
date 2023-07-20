@@ -64,6 +64,7 @@ while True:
 
     target_angle = pixel_to_angle(np.array([targetLoc]), camera_state["mtx"], camera_state["dist"])[0]
     arduino.point(arduino.direction + target_angle)
+    arduino.fire()
 
 
 # %%
