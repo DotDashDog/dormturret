@@ -96,8 +96,8 @@ def pixel_to_angle(px_loc, mtx, dist):
 class Arduino:
     def __init__(self, serial):
         self.direction = np.array([90, 90])
-        self.minAngle = np.array([0, 50])
-        self.maxAngle = np.array([180, 130])
+        self.minAngle = np.array([-90, -45])
+        self.maxAngle = np.array([90, 45])
         #* RasPi communication code here
         self.ser = serial.Serial(
             port='/dev/ttyS0', 
@@ -107,12 +107,18 @@ class Arduino:
             bytesize = serial.EIGHTBITS,
             timeout = 1
         )
+        self.ser.write("G90")
 
     def point(self, newDirection):
-        self.direction = newDirection
+        fil = np.abs(self.minAngle) < np.abs(newDirection)
+        self.direction[fil] = newDirection[fil]
+
         #* RasPi communication code here
-        self.ser.write(f"[POINT COMMAND] X{newDirection[0]} Y{newDirection[1]}")
+        self.ser.write(f"G0 P{newDirection[0]} T{newDirection[1]}")
+    
+    def turn(self, angle):
+        self.point(self.direction + angle)
     
     def fire(self):
         #* RasPi communication code here
-        self.ser.write(f"[FIRE COMMAND]")
+        self.ser.write("M3")
