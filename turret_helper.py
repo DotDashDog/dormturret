@@ -3,7 +3,7 @@ import os
 import numpy as np
 import pickle
 import cv2 as cv
-import serial #! Won't work when on normal computer
+#import serial #! Won't work when on normal computer
 import time
 
 whitelist_dir = "face_whitelist"
@@ -84,10 +84,17 @@ def alt_az(vecs):
 
     return np.array(out)
 
-def pixel_to_angle(px_loc, mtx, dist):
+
+def diag_fov(fovx, fovy):
+    return np.rad2deg(2*np.arccos(np.cos(np.deg2rad(fovx)/2) * np.cos(np.deg2rad(fovy)/2)))
+
+
+def pixel_to_angle(px_loc, mtx, dist, fisheye=False):
+    undistort = cv.fisheye.undistortPoints if fisheye else cv.undistortPoints
+
     px_loc = np.reshape(px_loc, [px_loc.shape[0], 1, 2])
 
-    xy_undistorted = np.reshape(cv.undistortPoints(px_loc, mtx, dist), [px_loc.shape[0], 2])
+    xy_undistorted = np.reshape(undistort(px_loc, mtx, dist), [px_loc.shape[0], 2])
     homogeneous_points = np.append(xy_undistorted, 1*np.ones((xy_undistorted.shape[0], 1)), axis=1)
     out_pts = homogeneous_points
 
