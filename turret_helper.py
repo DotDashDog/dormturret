@@ -3,6 +3,8 @@ import os
 import numpy as np
 import pickle
 import cv2 as cv
+#import serial #! Won't work when on normal computer
+import time
 
 whitelist_dir = "face_whitelist"
 state_file = "whitelist_state.pkl"
@@ -82,27 +84,57 @@ def alt_az(vecs):
 
     return np.array(out)
 
-def pixel_to_angle(px_loc, mtx, dist):
+
+def diag_fov(fovx, fovy):
+    return np.rad2deg(2*np.arccos(np.cos(np.deg2rad(fovx)/2) * np.cos(np.deg2rad(fovy)/2)))
+
+
+def pixel_to_angle(px_loc, mtx, dist, fisheye=False):
+    undistort = cv.fisheye.undistortPoints if fisheye else cv.undistortPoints
+
     px_loc = np.reshape(px_loc, [px_loc.shape[0], 1, 2])
 
-    xy_undistorted = np.reshape(cv.undistortPoints(px_loc, mtx, dist), [px_loc.shape[0], 2])
+    xy_undistorted = np.reshape(undistort(px_loc, mtx, dist), [px_loc.shape[0], 2])
     homogeneous_points = np.append(xy_undistorted, 1*np.ones((xy_undistorted.shape[0], 1)), axis=1)
     out_pts = homogeneous_points
 
     return np.rad2deg(alt_az(out_pts))
 
+def bound(val, min, max):
+    if val < min:
+        return min
+    elif val > max:
+        return max
+    else:
+        return val
 class Arduino:
     def __init__(self, serial):
         self.direction = np.array([90, 90])
-        self.minAngle = np.array([0, 50])
-        self.maxAngle = np.array([180, 130])
+        self.minAngle = np.array([-90, -45])
+        self.maxAngle = np.array([90, 45])
         #* RasPi communication code here
-        pass
+        self.ser = serial.Serial(
+            port='/dev/ttyS0', 
+            baudrate = 9600,
+            parity = serial.PARITY_NONE,
+            stopbits = serial.STOPBITS_ONE,
+            bytesize = serial.EIGHTBITS,
+            timeout = 1
+        )
+        self.ser.write("G90")
 
     def point(self, newDirection):
-        self.direction = newDirection
+        self.direction[0] = bound(newDirection[0], self.minAngle[0], self.maxAngle[0])
+        self.direction[1] = bound(newDirection[1], self.minAngle[1], self.maxAngle[1])
+
         #* RasPi communication code here
+        self.ser.write(f"G0 P{self.direction[0]} T{self.direction[1]}")
+    
+    def turn(self, angle):
+        self.point(self.direction + angle)
     
     def fire(self):
         #* RasPi communication code here
-        pass
+        self.ser.write("M3")
+
+    

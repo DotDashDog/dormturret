@@ -14,7 +14,7 @@ whitelist_encs = latest_whitelist_encodings(whitelist_dir, state_file)
 with open(camera_file, "rb") as f:
     camera_state = pickle.load(f)
 
-arduino = Arduino(9600)
+bow = Arduino(9600)
 
 #%%
 
@@ -64,7 +64,8 @@ while True:
     # plt.show()
 
     target_angle = pixel_to_angle(np.array([targetLoc]), camera_state["mtx"], camera_state["dist"])[0]
-    arduino.point(arduino.direction + target_angle)
+    bow.turn(target_angle)
+    bow.fire()
 
 
 # %%
