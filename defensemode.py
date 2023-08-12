@@ -20,8 +20,9 @@ arduino = Arduino(9600)
 
 while True:
     #* Load the image to evaluate
-    fov = face_recognition.load_image_file(os.path.join("test_images", "bidenpelosi1.jpeg"))
-
+    #fov = face_recognition.load_image_file(os.path.join("test_images", "bidenpelosi1.jpeg"))
+    
+    
     locations = face_recognition.api.face_locations(
         fov,
         number_of_times_to_upsample=1, #* 1 is default, higher finds smaller faces. Tuning needed
