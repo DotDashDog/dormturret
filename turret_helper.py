@@ -100,6 +100,13 @@ def pixel_to_angle(px_loc, mtx, dist, fisheye=False):
 
     return np.rad2deg(alt_az(out_pts))
 
+def bound(val, min, max):
+    if val < min:
+        return min
+    elif val > max:
+        return max
+    else:
+        return val
 class Arduino:
     def __init__(self, serial):
         self.direction = np.array([90, 90])
@@ -117,11 +124,11 @@ class Arduino:
         self.ser.write("G90")
 
     def point(self, newDirection):
-        fil = np.abs(self.minAngle) < np.abs(newDirection)
-        self.direction[fil] = newDirection[fil]
+        self.direction[0] = bound(newDirection[0], self.minAngle[0], self.maxAngle[0])
+        self.direction[1] = bound(newDirection[1], self.minAngle[1], self.maxAngle[1])
 
         #* RasPi communication code here
-        self.ser.write(f"G0 P{newDirection[0]} T{newDirection[1]}")
+        self.ser.write(f"G0 P{self.direction[0]} T{self.direction[1]}")
     
     def turn(self, angle):
         self.point(self.direction + angle)
@@ -129,3 +136,5 @@ class Arduino:
     def fire(self):
         #* RasPi communication code here
         self.ser.write("M3")
+
+    

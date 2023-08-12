@@ -130,7 +130,7 @@ objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
 
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 num = 10
 found = 0
 while(found < num):  # Here, 10 can be changed to whatever number you like to choose
@@ -193,11 +193,29 @@ with open("calibration.yaml", "w") as f:
 # Read YAML file
 with open("calibration.yaml", 'r') as stream:
    dictionary = yaml.safe_load(stream)
-camera_matrix = dictionary.get("camera_matrix")
-dist_coeffs = dictionary.get("dist_coeff")
+camera_matrix = np.array(dictionary.get("camera_matrix"))
+dist_coeffs = np.array(dictionary.get("dist_coeff"))
 
 #%%
+
+from turret_helper import *
+
 sensor_w_mm = 6.058
 sensor_h_mm = 4.415
 fovx, fovy, focalLength, principalPoint, aspectRatio = cv2.calibrationMatrixValues(mtx, (1920, 1080), sensor_w_mm, sensor_h_mm)
+
+fovdiag = diag_fov(fovx, fovy)
+
+print("X FOV:", fovx, ", Y FOV:", fovy, ", Diagonal FOV:", fovdiag)
+
+testpoints = np.array([[0, 0], [1920/2, 1080/2], [1920, 1080]], dtype=np.float32)
+
+out_angles = pixel_to_angle(
+    testpoints, 
+    camera_matrix, 
+    dist_coeffs)
+
+real_fov = out_angles[2] - out_angles[0]
+
+print(real_fov, diag_fov(real_fov[0], real_fov[1]))
 # %%
