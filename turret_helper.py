@@ -28,7 +28,7 @@ def update_encodings(whitelist_dir):
         img = face_recognition.load_image_file(os.path.join(whitelist_dir, f))
         enc = face_recognition.api.face_encodings(img)
         if len(enc) != 1:
-            raise ValueError(f"More than one face found in {f} while generating encodings")
+            raise ValueError("More than one face found in {} while generating encodings".format(f))
         encodings.append(enc[0])
 
     new_state = {"encodings" : encodings,
@@ -108,7 +108,7 @@ def bound(val, min, max):
     else:
         return val
 class Arduino:
-    def __init__(self, serial):
+    def __init__(self):
         self.direction = np.array([90, 90])
         self.minAngle = np.array([-90, -45])
         self.maxAngle = np.array([90, 45])
@@ -128,7 +128,7 @@ class Arduino:
         self.direction[1] = bound(newDirection[1], self.minAngle[1], self.maxAngle[1])
 
         #* RasPi communication code here
-        self.ser.write(f"G0 P{self.direction[0]} T{self.direction[1]}")
+        self.ser.write("G0 P{} T{}".format(self.direction[0], self.direction[1]))
     
     def turn(self, angle):
         self.point(self.direction + angle)
