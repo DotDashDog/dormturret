@@ -32,14 +32,14 @@ while True:
     #* Location is a tuple in the format (top, right, bottom, left) (bounding box)
 
     face_encodings = face_recognition.api.face_encodings(fov, locations)
-    print(f"{len(face_encodings)} faces detected.")
+    print("{} faces detected.".format(len(face_encodings)))
 
 
     targets = []
     for i, face in enumerate(face_encodings):
         box = locations[i]
         if not isWhitelisted(face, whitelist_encs):
-            print(f"Target found. Face center at {faceCenter(box)}")
+            print("Target found. Face center at {}".format(faceCenter(box)))
             targets.append(box)
 
     box = targets[0]
@@ -59,7 +59,7 @@ while True:
     # rect = patches.Rectangle((box[3], box[2]), box[1]-box[3], box[0]-box[2], linewidth=1, edgecolor='r', facecolor='none')
     # ax.plot(*targetLoc, marker="v", color="red")
     # ax.add_patch(rect)
-    # print(f"Target found. Face center at {faceCenter(box)}")
+    # print("Target found. Face center at {}".format(faceCenter(box))
 
     # plt.show()
 
