@@ -16,7 +16,7 @@ with open(camera_file, "rb") as f:
     camera_state = pickle.load(f)
 
 bow = Arduino(9600)
-cam = cv.VideoCapture()
+cam = cv.VideoCapture(0)
 
 #%%
 
