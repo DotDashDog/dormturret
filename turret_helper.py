@@ -3,7 +3,7 @@ import os
 import numpy as np
 import pickle
 import cv2 as cv
-#import serial #! Won't work when on normal computer
+import serial #! Won't work when on normal computer
 import time
 
 whitelist_dir = "face_whitelist"
@@ -108,14 +108,14 @@ def bound(val, min, max):
     else:
         return val
 class Arduino:
-    def __init__(self):
+    def __init__(self, baud):
         self.direction = np.array([90, 90])
         self.minAngle = np.array([-90, -45])
         self.maxAngle = np.array([90, 45])
         #* RasPi communication code here
         self.ser = serial.Serial(
             port='/dev/ttyUSB0', 
-            baudrate = 9600,
+            baudrate = baud,
             parity = serial.PARITY_NONE,
             stopbits = serial.STOPBITS_ONE,
             bytesize = serial.EIGHTBITS,
