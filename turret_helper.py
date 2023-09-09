@@ -3,11 +3,7 @@ import os
 import numpy as np
 import pickle
 import cv2 as cv
-<<<<<<< HEAD
 import serial
-=======
-import serial #! Won't work when on normal computer
->>>>>>> dc923608d0201820f0c1550c3dee571514eec5cb
 import time
 
 whitelist_dir = "face_whitelist"
@@ -118,7 +114,7 @@ class Arduino:
         self.maxAngle = np.array([90, 45])
         #* RasPi communication code here
         self.ser = serial.Serial(
-            port='/dev/ttyUSB0', 
+            port='/dev/cu.usbserial-14330', #! Will be different for different devices
             baudrate = baud,
             parity = serial.PARITY_NONE,
             stopbits = serial.STOPBITS_ONE,
