@@ -4,6 +4,7 @@ import os
 import numpy as np
 import pickle
 from turret_helper import *
+import cv2 as cv
 
 
 #%%
@@ -15,22 +16,25 @@ with open(camera_file, "rb") as f:
     camera_state = pickle.load(f)
 
 bow = Arduino(9600)
+cam = cv.VideoCapture(0)
 
 #%%
 
 while True:
     #* Load the image to evaluate
-    fov = face_recognition.load_image_file(os.path.join("test_images", "bidenpelosi1.jpeg"))
-
+    #fov = face_recognition.load_image_file(os.path.join("test_images", "bidenpelosi1.jpeg"))
+    return_value, image = cam.read()
+    
+    
     locations = face_recognition.api.face_locations(
-        fov,
+        image,
         number_of_times_to_upsample=1, #* 1 is default, higher finds smaller faces. Tuning needed
         model="hog", #* Options: "hog" (faster on cpu, less accurate), "cnn" (faster on gpu, more accurate)
     )
 
     #* Location is a tuple in the format (top, right, bottom, left) (bounding box)
 
-    face_encodings = face_recognition.api.face_encodings(fov, locations)
+    face_encodings = face_recognition.api.face_encodings(image, locations)
     print("{} faces detected.".format(len(face_encodings)))
 
 
