@@ -15,7 +15,7 @@ whitelist_encs = latest_whitelist_encodings(whitelist_dir, state_file)
 with open(camera_file, "rb") as f:
     camera_state = pickle.load(f)
 
-bow = Arduino(115200)
+bow = Arduino(9600)
 cam = cv.VideoCapture(0)
 #%%
 
