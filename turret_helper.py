@@ -3,7 +3,7 @@ import os
 import numpy as np
 import pickle
 import cv2 as cv
-#import serial #! Won't work when on normal computer
+import serial
 import time
 
 whitelist_dir = "face_whitelist"
