@@ -116,25 +116,25 @@ class Arduino:
         self.ser = serial.Serial(
             port='/dev/ttyUSB0', 
             baudrate = baud,
-            parity = serial.PARITY_NONE,
-            stopbits = serial.STOPBITS_ONE,
-            bytesize = serial.EIGHTBITS,
-            timeout = 1
+            # parity = serial.PARITY_NONE,
+            # stopbits = serial.STOPBITS_ONE,
+            # bytesize = serial.EIGHTBITS,
+            # timeout = 1
         )
-        self.ser.write("G90")
+        self.ser.write(b"G90\n")
 
     def point(self, newDirection):
         self.direction[0] = bound(newDirection[0], self.minAngle[0], self.maxAngle[0])
         self.direction[1] = bound(newDirection[1], self.minAngle[1], self.maxAngle[1])
 
         #* RasPi communication code here
-        self.ser.write("G0 P{} T{}".format(self.direction[0], self.direction[1]))
+        self.ser.write("G0 P{} T{}\n".format(self.direction[0], self.direction[1]).encode())
     
     def turn(self, angle):
         self.point(self.direction + angle)
     
     def fire(self):
         #* RasPi communication code here
-        self.ser.write("M3")
+        self.ser.write(b"M3\n")
 
     
