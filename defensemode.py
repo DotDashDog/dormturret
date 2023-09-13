@@ -17,7 +17,6 @@ with open(camera_file, "rb") as f:
 
 bow = Arduino(9600)
 cam = cv.VideoCapture(0)
-
 #%%
 
 while True:
