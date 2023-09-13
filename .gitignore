@@ -1,0 +1,5 @@
+nano-code/.pio
+nano-code/.vscode/.browse.c_cpp.db*
+nano-code/.vscode/c_cpp_properties.json
+nano-code/.vscode/launch.json
+nano-code/.vscode/ipch
