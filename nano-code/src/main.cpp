@@ -1,45 +1,23 @@
 #include <Arduino.h>
+#include <Configuration.h>
 #include <Servo.h>
-
-// constants for scaling servo stuff properly
-const float PAN_MIN = -90;
-const float PAN_MAX = 90;
-const float PAN_SCL = -7.7777;
-const long PAN_CENTER = 1500; //in us
-
-const float TILT_MIN = -70.0;
-const float TILT_MAX = 70.0;
-const float TILT_SCL = 16.0;
-const long TILT_CENTER = 1500; //in us
-
-// constants for firing locations (in us)
-const long PULL_FWD = 2320; // pull servo in forward position
-const long PULL_BACK = 850; // pull servo in backward but not yet released position
-const long RELEASE = 700;   // pull servo in released (shot) position
-
-// firing timing/delays (in ms)
-// must be unsigned long since millis() returns unsigned long
-// and we need to work with it
-const unsigned long PULL_DELAY = 900;    // how long it takes to pull from forward to back hold pos
-const unsigned long RELEASE_DELAY = 200; // how long it takes to pull from back hold to release (this fires)
-const unsigned long RELOAD_DELAY = 700;  // how long it takes to go back to forward pos
-
-// other constants
-const long CMD_BUF_LEN = 25;   // max length of command queue
-const long AIM_SPEED = 60.0; // in ms/deg
-
 
 Servo pull;
 Servo pan;
 Servo tilt;
 
 void setup() {
-  pull.attach(9);
-  pan.attach(10);
-  tilt.attach(11);
-  Serial.begin(115200);
-  delay(1000);
-  Serial.write("started");
+    pull.attach(9);
+    pan.attach(10);
+    tilt.attach(11);
+    pull.writeMicroseconds(PULL_FWD);
+    pan.writeMicroseconds(PAN_CENTER);
+    tilt.writeMicroseconds(TILT_CENTER);
+    Serial.begin(BAUDRATE);
+    // delay(2000);
+    #ifdef DEBUG
+    Serial.write("started");
+    #endif
 }
 
 // lets us reset the board from software
@@ -95,9 +73,9 @@ struct coord {
 
 // the possible states for the 
 // firing sequence
-enum class pullstate: int {
-  rest = PULL_FWD+1,
-  pull = PULL_BACK+1,
+enum class pullstate: long {
+  rest = PULL_FWD+1L,
+  pull = PULL_BACK+1L,
   hold = PULL_BACK,
   release = RELEASE,
   reload = PULL_FWD,
@@ -126,9 +104,13 @@ long shot_counter = 0L;
 // deals with incrementing the shot counter if needed
 // and moving the end pointer
 void add_command(String cmd) {
+  #ifdef DEBUG
   Serial.println("added command: " + cmd);
+  #endif
   if (cmd.indexOf(String("M3")) != -1) {
+    #ifdef DEBUG
     Serial.println("here!");
+    #endif
     shot_counter++;
   }
   cmdbuf[end] = cmd;
@@ -141,6 +123,9 @@ void add_command(String cmd) {
 
 String readString;
 void loop() {
+    #ifdef DEBUG
+    bool new_cmd = false;
+    #endif
     // read new commands from serial if available
     if (Serial.available() > 0){
         readString = String("");
@@ -152,6 +137,21 @@ void loop() {
         }
         // add command to buffer
         add_command(readString);
+        #ifdef DEBUG
+        new_cmd = true;
+        Serial.println("command added: " + readString);
+        delay(100);
+        for (int i = 0; i<CMD_BUF_LEN; i++) {
+        if (i==start) { Serial.print("["); }
+        if (i==end) { Serial.print("]"); }
+        if (cmdbuf[i].length() < 2) {
+            Serial.print("  ;");
+        } else {
+            Serial.print(cmdbuf[i].substring(0, 2) + String(';'));
+        }
+        }
+        Serial.print("\n");
+        #endif
     }
 
     // state transition logic for firing sequence FSM
@@ -162,39 +162,79 @@ void loop() {
         if (shot_counter > 0L) {
             shot_counter--;
             state = pullstate::pull;
+            #ifdef DEBUG
             Serial.println("rest -> pull");
+            #endif
             // set the delay so we continue after we're done pulling
+            pull.writeMicroseconds(PULL_BACK);
+            #ifdef DEBUG
+            Serial.println("wrote to servo");
+            #endif
             pull_delay_ms = PULL_DELAY + millis();
+            #ifdef DEBUG
+            Serial.println("set delay, finished if statement");
+            #endif
         }
     } else if (state == pullstate::pull) {
         if (pull_delay_ms < millis()) {
             // if we're done pulling, set the state to "hold"
             // since we're holding and waiting for the fire signal
+            #ifdef DEBUG
             Serial.println("pull -> hold");
+            #endif
             state = pullstate::hold;
         }
     } else if (state == pullstate::release) {
         if (pull_delay_ms < millis()) {
             // if we're done releasing, set the state to "reload",
             // and set the delay to the reload delay
+            #ifdef DEBUG
+            new_cmd = true;
             Serial.println("release -> reload");
+            #endif
             state = pullstate::reload;
+            pull.writeMicroseconds(PULL_FWD);
             pull_delay_ms = RELOAD_DELAY + millis();
         }
     } else if (state == pullstate::reload) {
         if (pull_delay_ms < millis()) {
             // once we're done reloading, we're back to the "rest" state
+            #ifdef DEBUG
+            new_cmd = true;
             Serial.println("reload -> rest");
+            #endif
             state = pullstate::rest;
         }
     }
+    #ifdef DEBUG
+    delay(100);
+    if (new_cmd) {
+        Serial.println("post-FSM");
+        for (int i = 0; i<CMD_BUF_LEN; i++) {
+        if (i==start) { Serial.print("["); }
+        if (i==end) { Serial.print("]"); }
+        if (cmdbuf[i].length() < 2) {
+            Serial.print("  ;");
+        } else {
+            Serial.print(cmdbuf[i].substring(0, 2) + String(';'));
+        }
+        }
+        Serial.print("\n");
+    }
+    #endif
+    // delay(10);
     // update all the servos
-    pan.writeMicroseconds(curpos.panUs());
-    tilt.writeMicroseconds(curpos.tiltUs());
-
-    // int(state) is always the constant we tuned at the start
-    // for each location. So this sets the pull location
-    pull.writeMicroseconds(int(state));
+    pan.writeMicroseconds((int)curpos.panUs());
+    tilt.writeMicroseconds((int)curpos.tiltUs());
+    // delay(10);
+    #ifdef DEBUG
+    if (new_cmd) {
+        Serial.println("post servo write");
+        Serial.print(start);
+        Serial.println(end);
+        Serial.println(delay_time_ms - millis());
+    }
+    #endif
 
     // the rest of the code deals with new instructions
 
@@ -208,7 +248,23 @@ void loop() {
     // until it's passed, so we shouldn't do anything
     // delay time is the delay set by each action
     if (delay_time_ms > millis()) { return; } //nothing to do, waiting for thing to happen
-
+    
+    // For debugging: 
+    #ifdef DEBUG
+    Serial.println(new_cmd);
+    Serial.println("pre-pop");
+    for (int i = 0; i<CMD_BUF_LEN; i++) {
+      if (i==start) { Serial.print("["); }
+      if (i==end) { Serial.print("]"); }
+      if (cmdbuf[i].length() < 2) {
+        Serial.print("  ;");
+      } else {
+        Serial.print(cmdbuf[i].substring(0, 2) + String(';'));
+      }
+    }
+    Serial.print("\n");
+    #endif
+    
     // string to store our command
     String todo = cmdbuf[start];
     // now that we looked up our command, increment the start pointer
@@ -233,14 +289,14 @@ void loop() {
         long p = todo.substring(todo.indexOf(String("P"))+1).toFloat();
         long t = todo.substring(todo.indexOf(String("T"))+1).toFloat();
 
-        Serial.println(p);
-        Serial.println(t);
-
         // update global state
         // this also updates delay_time_ms
         curpos.update(p, t);
 
-        Serial.println("made it here");
+        #ifdef DEBUG
+        Serial.println(p);
+        Serial.println(t);
+        #endif
     }
     else if (todo.startsWith("G4")) {
         delay_time_ms = todo.substring(todo.indexOf("P")+1).toFloat() + millis();
@@ -253,10 +309,13 @@ void loop() {
             // so that next time around it'll still say we're on this command
             start--;
         } else {
+            #ifdef DEBUG
             Serial.println("setting to release mode");
+            #endif
             // this means we are cleared to fire!
             // step 1: set state machine to release state, resuming the cycle
             state = pullstate::release;
+            pull.writeMicroseconds(RELEASE);
             // step 2: set timers
             pull_delay_ms = RELEASE_DELAY + millis(); // for when we are done releasing and can start moving back to reload
             delay_time_ms = RELEASE_DELAY + millis(); // other actions should wait until we've fired bc we shouldn't move while firing
@@ -268,4 +327,17 @@ void loop() {
     if (start == CMD_BUF_LEN) {
         start = 0;
     }
+    #ifdef DEBUG
+    Serial.println("end loop");
+    for (int i = 0; i<CMD_BUF_LEN; i++) {
+      if (i==start) { Serial.print("["); }
+      if (i==end) { Serial.print("]"); }
+      if (cmdbuf[i].length() < 2) {
+        Serial.print("  ;");
+      } else {
+        Serial.print(cmdbuf[i].substring(0, 2) + String(';'));
+      }
+    }
+    Serial.print("\n");
+    #endif
 }
