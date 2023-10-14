@@ -15,8 +15,11 @@ whitelist_encs = latest_whitelist_encodings(whitelist_dir, state_file)
 with open(camera_file, "rb") as f:
     camera_state = pickle.load(f)
 
-bow = Arduino(9600)
+bow = Arduino(115200)
 cam = cv.VideoCapture(0)
+#* Set to 1080p
+cam.set(3, 1920)
+cam.set(4, 1080)
 #%%
 
 while True:
@@ -43,6 +46,11 @@ while True:
         if not isWhitelisted(face, whitelist_encs):
             print("Target found. Face center at {}".format(faceCenter(box)))
             targets.append(box)
+        else:
+            print("Non-target found. Face center at {}".format(faceCenter(box)))
+
+    if len(targets) == 0:
+        continue
 
     box = targets[0]
 
@@ -65,9 +73,14 @@ while True:
 
     # plt.show()
 
-    target_angle = pixel_to_angle(np.array([targetLoc]), camera_state["mtx"], camera_state["dist"])[0]
-    bow.turn(target_angle)
-    bow.fire()
+    # target_angle = pixel_to_angle(np.array([targetLoc]), camera_state["mtx"], camera_state["dist"])[0]
+    im_size = np.array([1920,1080])
+    angular_size = np.array([150, 130])
+    target_angle = pixel_to_angle_stupid(np.array(targetLoc), im_size, angular_size/im_size)
+    print(f"Turning {target_angle}")
+    # bow.point(np.array([0, 0]))
+    bow.turn(target_angle) 
+    # bow.fire()
 
 
 # %%

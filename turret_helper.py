@@ -100,6 +100,10 @@ def pixel_to_angle(px_loc, mtx, dist, fisheye=False):
 
     return np.rad2deg(alt_az(out_pts))
 
+def pixel_to_angle_stupid(px_loc, im_size, coeffs):
+    px_loc = px_loc - im_size/2
+    return coeffs * px_loc
+
 def bound(val, min, max):
     if val < min:
         return min
@@ -108,14 +112,15 @@ def bound(val, min, max):
     else:
         return val
 class Arduino:
-    def __init__(self, baud):
-        self.direction = np.array([90, 90])
+    def __init__(self, baud, port = '/dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0'):
+        self.direction = np.array([0, 0])
         self.minAngle = np.array([-90, -45])
         self.maxAngle = np.array([90, 45])
         #* RasPi communication code here
         self.ser = serial.Serial(
-            port='/dev/cu.usbserial-14330', #! Will be different for different devices
-            baudrate = baud,
+            # port='/dev/cu.usbserial-14330', #! Will be different for different devices
+            port = port,
+	    baudrate = baud,
             # parity = serial.PARITY_NONE,
             # stopbits = serial.STOPBITS_ONE,
             # bytesize = serial.EIGHTBITS,
@@ -128,7 +133,7 @@ class Arduino:
         self.direction[1] = bound(newDirection[1], self.minAngle[1], self.maxAngle[1])
 
         #* RasPi communication code here
-        self.ser.write("G0 P{} T{}\n".format(self.direction[0], self.direction[1]).encode())
+        self.ser.write("G0 P{} T{}\n".format(-self.direction[0], -self.direction[1]).encode())
     
     def turn(self, angle):
         self.point(self.direction + angle)
