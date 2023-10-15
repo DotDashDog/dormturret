@@ -50,6 +50,7 @@ class Turret:
         self.ser = serial.Serial(**self.ser_opts)
         self.ser.write(b"G90\n")
         self.point(np.array([0,0]))
+    def start(self):
         asyncio.run(self.socket())
     def __exit__(self):
         self.stream.terminate()
@@ -60,7 +61,5 @@ class Turret:
 if __name__ == '__main__':
     from time import sleep
     with Turret() as t:
-        print('started!')
-        while True:
-            sleep(0.1)
+        t.start()
 
