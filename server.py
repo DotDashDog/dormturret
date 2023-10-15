@@ -51,7 +51,7 @@ class Turret:
         self.ser.write(b"G90\n")
         self.point(np.array([0,0]))
     def start(self):
-        asyncio.run(self.socket())
+        asyncio.run(self.socket(), debug=False)
     def __exit__(self):
         self.stream.terminate()
         self.ser.write(b"M999\n")
@@ -61,5 +61,8 @@ class Turret:
 if __name__ == '__main__':
     from time import sleep
     with Turret() as t:
-        t.start()
+        try:
+            t.start()
+        except KeyboardInterrupt:
+            pass
 
