@@ -8,8 +8,8 @@ import subprocess
 class Turret:
     def __init__(self):
         self.ser_opts = {
-            'port': '/dev/cu.usbserial-14330',
-            'baudrade': 115200,
+            'port': '/dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0',
+            'baudrate': 115200,
         }
         self.pos = np.array([None, None])
         self.ubx = np.array([90,   40])
@@ -28,7 +28,7 @@ class Turret:
         self.pos = self.bound(point)
         self.ser.write(f"G0 P{self.pos[0]} T{self.pos[1]}\n".encode())
 
-    async def handle(self, websocket):
+    async def handler(self, websocket):
         while True:
             message = await websocket.recv()
             message = self.f.decrypt(message)
@@ -44,20 +44,23 @@ class Turret:
                 
     async def socket(self):
         async with websockets.serve(self.handler, "", 8001):
-            await self.fut
+            await asyncio.Future()
     def __enter__(self):
-        self.stream = subprocess.Popen(["startstream"])
+        self.stream = subprocess.Popen(['startstream'])
         self.ser = serial.Serial(**self.ser_opts)
         self.ser.write(b"G90\n")
         self.point(np.array([0,0]))
-        self.fut = asyncio.Future()
-        asyncio.run(self.socket)
+        asyncio.run(self.socket())
     def __exit__(self):
         self.stream.terminate()
         self.ser.write(b"M999\n")
         self.ser.close()
-        self.fut.set_exception(BaseException)
+        
 
 if __name__ == '__main__':
-    t = Turret()
+    from time import sleep
+    with Turret() as t:
+        print('started!')
+        while True:
+            sleep(0.1)
 
