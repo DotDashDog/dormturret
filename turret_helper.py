@@ -5,6 +5,8 @@ import pickle
 import cv2 as cv
 import serial
 import time
+import websockets
+from cryptography.fernet import Fernet
 
 whitelist_dir = "face_whitelist"
 state_file = "whitelist_state.pkl"
@@ -111,6 +113,13 @@ def bound(val, min, max):
         return max
     else:
         return val
+
+with open('/etc/shoot-key', 'r') as file:
+    f = Fernet(eval(file.read()))
+async def shoot(pan: float, tilt: float, shoot: int):
+    async with websockets.connect('ws://169.229.96.70:8001') as websocket:
+
+        await websocket.send(f.encrypt(str((pan, tilt, shoot)).encode()))
 class Arduino:
     def __init__(self, baud, port = '/dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0'):
         self.direction = np.array([0, 0])

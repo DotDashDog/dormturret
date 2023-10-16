@@ -48,12 +48,12 @@ class Turret:
     def __enter__(self):
         self.stream = subprocess.Popen(['startstream'])
         self.ser = serial.Serial(**self.ser_opts)
-        self.ser.write(b"G90\n")
+        self.ser.write(b"G91\n")
         self.point(np.array([0,0]))
     def start(self):
         asyncio.run(self.socket(), debug=False)
     def __exit__(self):
-        self.stream.terminate()
+        subprocess.Popen(['stopstream'])
         self.ser.write(b"M999\n")
         self.ser.close()
         
