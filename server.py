@@ -41,28 +41,27 @@ class Turret:
             else:
                 self.point(np.array(pt[:2]))
                 if pt[2]: self.ser.write(b"M3\n")
-                
+
     async def socket(self):
         async with websockets.serve(self.handler, "", 8001):
             await asyncio.Future()
     def __enter__(self):
-        self.stream = subprocess.Popen(['startstream'])
+        subprocess.run(['startstream'])
         self.ser = serial.Serial(**self.ser_opts)
         self.ser.write(b"G91\n")
         self.point(np.array([0,0]))
+        return self
     def start(self):
         asyncio.run(self.socket(), debug=False)
-    def __exit__(self):
-        subprocess.Popen(['stopstream'])
+    def __exit__(self, *args, **kwargs):
+        subprocess.run(['stopstream'])
         self.ser.write(b"M999\n")
         self.ser.close()
-        
+
 
 if __name__ == '__main__':
     from time import sleep
     with Turret() as t:
-        try:
-            t.start()
-        except KeyboardInterrupt:
-            pass
+        t.start()
+    print('exited')
 
