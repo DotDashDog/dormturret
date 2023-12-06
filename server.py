@@ -16,6 +16,7 @@ class Turret:
         self.lbx = np.array([-90, -35])
         with open('/etc/shoot-key', 'r') as file:
             self.f = Fernet(eval(file.read()))
+        self.relative = False
     def bound(self, point: np.array):
         pt = np.copy(point)
         umask = pt>self.ubx
@@ -23,7 +24,12 @@ class Turret:
         pt[umask] = self.ubx[umask]
         pt[lmask] = self.lbx[lmask]
         return pt
-    
+    def set_relative(self):
+        self.relative = True
+        self.ser.write(b'G91\n')
+    def set_absolute(self):
+        self.absolute = True
+        self.ser.write(b'G90\n')
     def point(self, point: np.array):
         self.pos = self.bound(point)
         self.ser.write(f"G0 P{self.pos[0]} T{self.pos[1]}\n".encode())
@@ -48,7 +54,7 @@ class Turret:
     def __enter__(self):
         subprocess.run(['startstream'])
         self.ser = serial.Serial(**self.ser_opts)
-        self.ser.write(b"G91\n")
+        self.set_relative()
         self.point(np.array([0,0]))
         return self
     def start(self):

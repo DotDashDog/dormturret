@@ -8,7 +8,16 @@ import cv2 as cv
 from threadedCamera import threadedCamera
 import asyncio
 from time import sleep
+import subprocess
 #%%
+print('initializing remote...')
+res = subprocess.Popen(['curl', 'https://www.ocf.berkeley.edu/~reiddye/turret_ip_status.txt'], stdout=subprocess.PIPE).communicate()[0].decode()
+ip = res.split('inet ')[-1].split(' ')[0]
+os.system(f'ssh pi@{ip} stopstream')
+sleep(1)
+os.system(f'ssh pi@{ip} "python ~/dormturret/server.py &>/dev/null &"')
+sleep(2)
+print('remote initialized!')
 #* Load whitelist encodings, updating (with a few runs of the model) if necessary
 whitelist_encs = latest_whitelist_encodings(whitelist_dir, state_file)
 
@@ -31,7 +40,7 @@ with open('/etc/shoot-key', 'r') as file:
     f = Fernet(eval(file.read()))
 #%%
 async def main():
-    async with websockets.connect('ws://169.229.96.70:8001') as websocket:
+    async with websockets.connect(f'ws://{ip}:8001') as websocket:
         while True:
             sleep(1/10)
             #* Load the image to evaluate
