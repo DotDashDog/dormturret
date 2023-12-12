@@ -1,2 +1,4 @@
 nano-code/.pio
 nano-code/.vscode/*
+images/*
+__pycache__/*

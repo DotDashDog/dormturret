@@ -32,6 +32,7 @@ class Turret:
         self.ser.write(b'G90\n')
     def point(self, point: np.array):
         self.pos = self.bound(point)
+        print(f"G0 P{self.pos[0]} T{self.pos[1]}\n".encode())
         self.ser.write(f"G0 P{self.pos[0]} T{self.pos[1]}\n".encode())
 
     async def handler(self, websocket):
@@ -49,10 +50,10 @@ class Turret:
                 if pt[2]: self.ser.write(b"M3\n")
 
     async def socket(self):
-        async with websockets.serve(self.handler, "", 8001):
-            await asyncio.Future()
+        async with websockets.serve(self.handler, "", 8001) as server:
+            await server.serve_forever()
     def __enter__(self):
-        subprocess.run(['startstream'])
+        subprocess.run(['startstream &>/dev/null &'])
         self.ser = serial.Serial(**self.ser_opts)
         self.set_relative()
         self.point(np.array([0,0]))

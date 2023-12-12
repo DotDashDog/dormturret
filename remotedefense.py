@@ -9,14 +9,18 @@ from threadedCamera import threadedCamera
 import asyncio
 from time import sleep
 import subprocess
+import requests
 #%%
 print('initializing remote...')
-res = subprocess.Popen(['curl', 'https://www.ocf.berkeley.edu/~reiddye/turret_ip_status.txt'], stdout=subprocess.PIPE).communicate()[0].decode()
-ip = res.split('inet ')[-1].split(' ')[0]
-os.system(f'ssh pi@{ip} stopstream')
-sleep(1)
-os.system(f'ssh pi@{ip} "python ~/dormturret/server.py &>/dev/null &"')
-sleep(2)
+res, err = subprocess.Popen(['curl', 'https://www.ocf.berkeley.edu/~reiddye/turret_ip_status.txt'], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+ip = res.decode().strip('\n')
+subprocess.Popen(['ssh', f'pi@{ip}', 'pkill python'])
+try: 
+    requests.get(f'http://{ip}:8080')
+    subprocess.Popen(['ssh', f'pi@{ip}', 'stopstream'])
+except: pass
+subprocess.Popen(['ssh', f'pi@{ip}', 'python ~/dormturret/server.py &>/dev/null &'])
+sleep(4)
 print('remote initialized!')
 #* Load whitelist encodings, updating (with a few runs of the model) if necessary
 whitelist_encs = latest_whitelist_encodings(whitelist_dir, state_file)
@@ -28,7 +32,7 @@ with open(camera_file, "rb") as f:
 # bow = Arduino(115200)
 # cam = cv.VideoCapture('http://169.229.96.70:8080/?action=stream')
 # capture.set(cv.CAP_PROP_FOURCC ,cv2.VideoWriter_fourcc('M', 'J', 'P', 'G') )
-cam = threadedCamera()
+cam = threadedCamera(cam=f'http://{ip}:8080/?action=stream')
 
 #* Set to 1080p
 # cam.cam.set(3, 1920)
@@ -52,7 +56,7 @@ async def main():
             locations = face_recognition.api.face_locations(
                 image,
                 number_of_times_to_upsample=1, #* 1 is default, higher finds smaller faces. Tuning needed
-                model="cnn", #* Options: "hog" (faster on cpu, less accurate), "cnn" (faster on gpu, more accurate)
+                model="hog", #* Options: "hog" (faster on cpu, less accurate), "cnn" (faster on gpu, more accurate)
             )
 
             #* Location is a tuple in the format (top, right, bottom, left) (bounding box)
