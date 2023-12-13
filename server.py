@@ -59,7 +59,7 @@ class Turret:
         async with websockets.serve(self.handler, "", 8001, ping_interval=None) as server:
             await server.serve_forever()
     def __enter__(self):
-        subprocess.run(['startstream &>/dev/null &'])
+        subprocess.run(['startstream', '&>/dev/null', '&'])
         self.ser = serial.Serial(**self.ser_opts)
         self.set_relative()
         self.point(np.array([0,0]))
