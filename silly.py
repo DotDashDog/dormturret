@@ -14,9 +14,11 @@ ip = res.decode().strip('\n')
 #     requests.get(f'http://{ip}:8080')
 #     subprocess.Popen(['ssh', f'pi@{ip}', 'stopstream'])
 # except: pass
-# subprocess.Popen(['ssh', f'pi@{ip}', 'startstream'])
+# sleep(1)
+# subprocess.Popen(['ssh', f'pi@{ip}', 'pkill python'])
+# sleep(1)
 # subprocess.Popen(['ssh', f'pi@{ip}', 'python ~/dormturret/server.py &>/dev/null &'])
-sleep(4)
+# sleep(3)
 print('remote initialized!')
 
 with open('/etc/shoot-key', 'r') as file:

@@ -30,9 +30,9 @@ class Turret:
 
         while True:
             self.ser.write(cmd)
-            if res:=self.ser.readline().decode()[:2]=='OK': break
+            if (res:=self.ser.readline().decode())[:2]=='OK': break
             else: print(res)
-            sleep(0.02) # don't spam the nano
+            sleep(0.05) # don't spam the nano
     def set_relative(self):
         self.send('G91')
     def set_absolute(self):
