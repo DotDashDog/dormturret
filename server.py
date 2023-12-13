@@ -24,16 +24,22 @@ class Turret:
         pt[umask] = self.ubx[umask]
         pt[lmask] = self.lbx[lmask]
         return pt
+    def send(self, cmd: str):
+        if cmd[-1] != '\n': cmd += '\n'
+        cmd = cmd.upper().encode()
+
+        while True:
+            self.ser.write(cmd)
+            if res:=self.ser.readline().decode()[:2]=='OK': break
+            else: print(res)
+            sleep(0.02) # don't spam the nano
     def set_relative(self):
-        self.relative = True
-        self.ser.write(b'G91\n')
+        self.send('G91')
     def set_absolute(self):
-        self.absolute = True
-        self.ser.write(b'G90\n')
+        self.send('G90')
     def point(self, point: np.array):
         self.pos = self.bound(point)
-        print(f"G0 P{self.pos[0]} T{self.pos[1]}\n".encode())
-        self.ser.write(f"G0 P{self.pos[0]} T{self.pos[1]}\n".encode())
+        self.send(f'G0 P{self.pos[0]} T{self.pos[1]}')
 
     async def handler(self, websocket):
         while True:
@@ -47,7 +53,7 @@ class Turret:
                 pass
             else:
                 self.point(np.array(pt[:2]))
-                if pt[2]: self.ser.write(b"M3\n")
+                if pt[2]: self.send('M3')
 
     async def socket(self):
         async with websockets.serve(self.handler, "", 8001) as server:
@@ -61,8 +67,8 @@ class Turret:
     def start(self):
         asyncio.run(self.socket(), debug=False)
     def __exit__(self, *args, **kwargs):
+        self.send('M999')
         subprocess.run(['stopstream'])
-        self.ser.write(b"M999\n")
         self.ser.close()
 
 

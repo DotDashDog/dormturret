@@ -107,6 +107,10 @@ void add_command(String cmd) {
   #ifdef DEBUG
   Serial.println("added command: " + cmd);
   #endif
+  if (end+1 == start || (start==0 && end==CMD_BUF_LEN-1)) {
+    Serial.println("ERR: cmdbuf full, skipping "+cmd);
+    return;
+  }
   if (cmd.indexOf(String("M3")) != -1) {
     #ifdef DEBUG
     Serial.println("here!");
@@ -119,6 +123,8 @@ void add_command(String cmd) {
   } else {
       end += 1;
   }
+  Serial.println("OK: "+cmd);
+
 }
 
 String readString;
