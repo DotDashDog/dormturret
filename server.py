@@ -56,7 +56,7 @@ class Turret:
                 if pt[2]: self.send('M3')
 
     async def socket(self):
-        async with websockets.serve(self.handler, "", 8001) as server:
+        async with websockets.serve(self.handler, "", 8001, ping_interval=None) as server:
             await server.serve_forever()
     def __enter__(self):
         subprocess.run(['startstream &>/dev/null &'])
