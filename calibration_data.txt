@@ -1,0 +1,464 @@
+{'angles': (-10, -10), 'pixels': (553, 234)}
+{'angles': (-10, -15), 'pixels': (554, 180)}
+{'angles': (-10, -20), 'pixels': (552, 135)}
+{'angles': (-10, -25), 'pixels': (550, 86)}
+{'angles': (-10, -30), 'pixels': (547, 37)}
+{'angles': (-10, -35), 'pixels': (545, 10)}
+{'angles': (-10, -40), 'pixels': None}
+{'angles': (-10, -5), 'pixels': (554, 280)}
+{'angles': (-10, 0), 'pixels': (556, 333)}
+{'angles': (-10, 10), 'pixels': (557, 430)}
+{'angles': (-10, 15), 'pixels': (556, 476)}
+{'angles': (-10, 20), 'pixels': (558, 528)}
+{'angles': (-10, 25), 'pixels': (556, 571)}
+{'angles': (-10, 30), 'pixels': (556, 615)}
+{'angles': (-10, 35), 'pixels': (556, 656)}
+{'angles': (-10, 5), 'pixels': (557, 378)}
+{'angles': (-15, -10), 'pixels': (493, 238)}
+{'angles': (-15, -15), 'pixels': (492, 182)}
+{'angles': (-15, -20), 'pixels': (490, 139)}
+{'angles': (-15, -25), 'pixels': (487, 86)}
+{'angles': (-15, -30), 'pixels': (485, 42)}
+{'angles': (-15, -35), 'pixels': (484, 13)}
+{'angles': (-15, -40), 'pixels': None}
+{'angles': (-15, -5), 'pixels': (494, 282)}
+{'angles': (-15, 0), 'pixels': (496, 335)}
+{'angles': (-15, 10), 'pixels': (496, 432)}
+{'angles': (-15, 15), 'pixels': (497, 476)}
+{'angles': (-15, 20), 'pixels': (497, 526)}
+{'angles': (-15, 25), 'pixels': (496, 567)}
+{'angles': (-15, 30), 'pixels': (497, 611)}
+{'angles': (-15, 35), 'pixels': (496, 652)}
+{'angles': (-15, 5), 'pixels': (496, 380)}
+{'angles': (-20, -10), 'pixels': (445, 242)}
+{'angles': (-20, -15), 'pixels': (442, 185)}
+{'angles': (-20, -20), 'pixels': (439, 142)}
+{'angles': (-20, -25), 'pixels': (436, 95)}
+{'angles': (-20, -30), 'pixels': (432, 49)}
+{'angles': (-20, -35), 'pixels': (430, 19)}
+{'angles': (-20, -40), 'pixels': None}
+{'angles': (-20, -5), 'pixels': (446, 286)}
+{'angles': (-20, 0), 'pixels': (446, 333)}
+{'angles': (-20, 10), 'pixels': (448, 430)}
+{'angles': (-20, 15), 'pixels': (447, 473)}
+{'angles': (-20, 20), 'pixels': (446, 523)}
+{'angles': (-20, 25), 'pixels': (446, 564)}
+{'angles': (-20, 30), 'pixels': (445, 607)}
+{'angles': (-20, 35), 'pixels': (446, 647)}
+{'angles': (-20, 5), 'pixels': (447, 381)}
+{'angles': (-25, -10), 'pixels': (396, 243)}
+{'angles': (-25, -15), 'pixels': (392, 190)}
+{'angles': (-25, -20), 'pixels': (391, 150)}
+{'angles': (-25, -25), 'pixels': (383, 100)}
+{'angles': (-25, -30), 'pixels': (381, 57)}
+{'angles': (-25, -35), 'pixels': (379, 30)}
+{'angles': (-25, -40), 'pixels': None}
+{'angles': (-25, -5), 'pixels': (398, 289)}
+{'angles': (-25, 0), 'pixels': (399, 335)}
+{'angles': (-25, 10), 'pixels': (401, 427)}
+{'angles': (-25, 15), 'pixels': (401, 469)}
+{'angles': (-25, 20), 'pixels': (401, 520)}
+{'angles': (-25, 25), 'pixels': (398, 558)}
+{'angles': (-25, 30), 'pixels': (397, 602)}
+{'angles': (-25, 35), 'pixels': (396, 640)}
+{'angles': (-25, 5), 'pixels': (399, 378)}
+{'angles': (-30, -10), 'pixels': (331, 249)}
+{'angles': (-30, -15), 'pixels': (328, 196)}
+{'angles': (-30, -20), 'pixels': (325, 159)}
+{'angles': (-30, -25), 'pixels': (320, 114)}
+{'angles': (-30, -30), 'pixels': (315, 72)}
+{'angles': (-30, -35), 'pixels': (311, 44)}
+{'angles': (-30, -40), 'pixels': None}
+{'angles': (-30, -5), 'pixels': (333, 291)}
+{'angles': (-30, 0), 'pixels': (336, 339)}
+{'angles': (-30, 10), 'pixels': (337, 424)}
+{'angles': (-30, 15), 'pixels': (338, 468)}
+{'angles': (-30, 20), 'pixels': (337, 511)}
+{'angles': (-30, 25), 'pixels': (337, 549)}
+{'angles': (-30, 30), 'pixels': (335, 589)}
+{'angles': (-30, 35), 'pixels': (331, 628)}
+{'angles': (-30, 5), 'pixels': (338, 378)}
+{'angles': (-35, -10), 'pixels': (274, 254)}
+{'angles': (-35, -15), 'pixels': (269, 203)}
+{'angles': (-35, -20), 'pixels': (266, 165)}
+{'angles': (-35, -25), 'pixels': (260, 124)}
+{'angles': (-35, -30), 'pixels': (255, 84)}
+{'angles': (-35, -35), 'pixels': (252, 64)}
+{'angles': (-35, -40), 'pixels': None}
+{'angles': (-35, -5), 'pixels': (277, 290)}
+{'angles': (-35, 0), 'pixels': (276, 335)}
+{'angles': (-35, 10), 'pixels': (280, 417)}
+{'angles': (-35, 15), 'pixels': (279, 458)}
+{'angles': (-35, 20), 'pixels': (278, 502)}
+{'angles': (-35, 25), 'pixels': (275, 539)}
+{'angles': (-35, 30), 'pixels': (274, 577)}
+{'angles': (-35, 35), 'pixels': (271, 615)}
+{'angles': (-35, 5), 'pixels': (280, 376)}
+{'angles': (-40, -10), 'pixels': (226, 257)}
+{'angles': (-40, -15), 'pixels': (223, 214)}
+{'angles': (-40, -20), 'pixels': (217, 181)}
+{'angles': (-40, -25), 'pixels': (210, 139)}
+{'angles': (-40, -30), 'pixels': (203, 102)}
+{'angles': (-40, -35), 'pixels': (200, 81)}
+{'angles': (-40, -40), 'pixels': None}
+{'angles': (-40, -5), 'pixels': (229, 292)}
+{'angles': (-40, 0), 'pixels': (230, 337)}
+{'angles': (-40, 10), 'pixels': (232, 417)}
+{'angles': (-40, 15), 'pixels': (231, 452)}
+{'angles': (-40, 20), 'pixels': (231, 495)}
+{'angles': (-40, 25), 'pixels': (229, 532)}
+{'angles': (-40, 30), 'pixels': (229, 563)}
+{'angles': (-40, 35), 'pixels': (224, 600)}
+{'angles': (-40, 5), 'pixels': (231, 376)}
+{'angles': (-45, -10), 'pixels': (174, 264)}
+{'angles': (-45, -15), 'pixels': (171, 223)}
+{'angles': (-45, -20), 'pixels': (167, 192)}
+{'angles': (-45, -25), 'pixels': (160, 156)}
+{'angles': (-45, -30), 'pixels': (154, 121)}
+{'angles': (-45, -35), 'pixels': (149, 99)}
+{'angles': (-45, -40), 'pixels': None}
+{'angles': (-45, -5), 'pixels': (176, 303)}
+{'angles': (-45, 0), 'pixels': (176, 338)}
+{'angles': (-45, 10), 'pixels': (180, 412)}
+{'angles': (-45, 15), 'pixels': (177, 444)}
+{'angles': (-45, 20), 'pixels': (177, 484)}
+{'angles': (-45, 25), 'pixels': (174, 518)}
+{'angles': (-45, 30), 'pixels': (173, 549)}
+{'angles': (-45, 35), 'pixels': (171, 580)}
+{'angles': (-45, 5), 'pixels': (180, 372)}
+{'angles': (-5, -10), 'pixels': (595, 235)}
+{'angles': (-5, -15), 'pixels': (597, 178)}
+{'angles': (-5, -20), 'pixels': (596, 136)}
+{'angles': (-5, -25), 'pixels': (593, 84)}
+{'angles': (-5, -30), 'pixels': (592, 32)}
+{'angles': (-5, -35), 'pixels': (591, 6)}
+{'angles': (-5, -40), 'pixels': None}
+{'angles': (-5, -5), 'pixels': (597, 278)}
+{'angles': (-5, 0), 'pixels': (597, 335)}
+{'angles': (-5, 10), 'pixels': (600, 432)}
+{'angles': (-5, 15), 'pixels': (600, 477)}
+{'angles': (-5, 20), 'pixels': (599, 529)}
+{'angles': (-5, 25), 'pixels': (598, 571)}
+{'angles': (-5, 30), 'pixels': (600, 616)}
+{'angles': (-5, 35), 'pixels': (601, 657)}
+{'angles': (-5, 5), 'pixels': (597, 378)}
+{'angles': (-50, -10), 'pixels': (119, 274)}
+{'angles': (-50, -15), 'pixels': (117, 233)}
+{'angles': (-50, -20), 'pixels': (115, 205)}
+{'angles': (-50, -25), 'pixels': (108, 175)}
+{'angles': (-50, -30), 'pixels': (100, 143)}
+{'angles': (-50, -35), 'pixels': (98, 126)}
+{'angles': (-50, -40), 'pixels': None}
+{'angles': (-50, -5), 'pixels': (124, 304)}
+{'angles': (-50, 0), 'pixels': (124, 338)}
+{'angles': (-50, 10), 'pixels': (125, 404)}
+{'angles': (-50, 15), 'pixels': (127, 437)}
+{'angles': (-50, 20), 'pixels': (125, 470)}
+{'angles': (-50, 25), 'pixels': (122, 500)}
+{'angles': (-50, 30), 'pixels': (122, 528)}
+{'angles': (-50, 35), 'pixels': (118, 560)}
+{'angles': (-50, 5), 'pixels': (124, 371)}
+{'angles': (-55, -10), 'pixels': (56, 286)}
+{'angles': (-55, -15), 'pixels': (54, 254)}
+{'angles': (-55, -20), 'pixels': (49, 229)}
+{'angles': (-55, -25), 'pixels': (45, 202)}
+{'angles': (-55, -30), 'pixels': (36, 177)}
+{'angles': (-55, -35), 'pixels': (33, 163)}
+{'angles': (-55, -40), 'pixels': None}
+{'angles': (-55, -5), 'pixels': (61, 311)}
+{'angles': (-55, 0), 'pixels': (62, 339)}
+{'angles': (-55, 10), 'pixels': (63, 395)}
+{'angles': (-55, 15), 'pixels': (62, 422)}
+{'angles': (-55, 20), 'pixels': (63, 451)}
+{'angles': (-55, 25), 'pixels': (59, 477)}
+{'angles': (-55, 30), 'pixels': (58, 501)}
+{'angles': (-55, 35), 'pixels': (54, 526)}
+{'angles': (-55, 5), 'pixels': (63, 368)}
+{'angles': (-60, -10), 'pixels': (18, 293)}
+{'angles': (-60, -15), 'pixels': (16, 265)}
+{'angles': (-60, -20), 'pixels': (11, 244)}
+{'angles': (-60, -25), 'pixels': (4, 220)}
+{'angles': (-60, -30), 'pixels': None}
+{'angles': (-60, -35), 'pixels': None}
+{'angles': (-60, -40), 'pixels': None}
+{'angles': (-60, -5), 'pixels': (20, 315)}
+{'angles': (-60, 0), 'pixels': (23, 341)}
+{'angles': (-60, 10), 'pixels': (23, 389)}
+{'angles': (-60, 15), 'pixels': (24, 412)}
+{'angles': (-60, 20), 'pixels': (23, 438)}
+{'angles': (-60, 25), 'pixels': (22, 459)}
+{'angles': (-60, 30), 'pixels': (21, 481)}
+{'angles': (-60, 35), 'pixels': (17, 502)}
+{'angles': (-60, 5), 'pixels': (25, 365)}
+{'angles': (-65, -10), 'pixels': None}
+{'angles': (-65, -15), 'pixels': None}
+{'angles': (-65, -20), 'pixels': None}
+{'angles': (-65, -25), 'pixels': None}
+{'angles': (-65, -30), 'pixels': None}
+{'angles': (-65, -35), 'pixels': None}
+{'angles': (-65, -40), 'pixels': None}
+{'angles': (-65, -5), 'pixels': None}
+{'angles': (-65, 0), 'pixels': None}
+{'angles': (-65, 10), 'pixels': None}
+{'angles': (-65, 15), 'pixels': None}
+{'angles': (-65, 20), 'pixels': None}
+{'angles': (-65, 25), 'pixels': None}
+{'angles': (-65, 30), 'pixels': None}
+{'angles': (-65, 35), 'pixels': None}
+{'angles': (-65, 5), 'pixels': None}
+{'angles': (-70, -10), 'pixels': None}
+{'angles': (-70, -15), 'pixels': None}
+{'angles': (-70, -20), 'pixels': None}
+{'angles': (-70, -25), 'pixels': None}
+{'angles': (-70, -30), 'pixels': None}
+{'angles': (-70, -35), 'pixels': None}
+{'angles': (-70, -40), 'pixels': None}
+{'angles': (-70, -5), 'pixels': None}
+{'angles': (-70, 0), 'pixels': None}
+{'angles': (-70, 10), 'pixels': None}
+{'angles': (-70, 15), 'pixels': None}
+{'angles': (-70, 20), 'pixels': None}
+{'angles': (-70, 25), 'pixels': None}
+{'angles': (-70, 30), 'pixels': None}
+{'angles': (-70, 35), 'pixels': None}
+{'angles': (-70, 5), 'pixels': None}
+{'angles': (0, -10), 'pixels': (650, 235)}
+{'angles': (0, -15), 'pixels': (651, 178)}
+{'angles': (0, -20), 'pixels': (649, 134)}
+{'angles': (0, -25), 'pixels': (647, 83)}
+{'angles': (0, -30), 'pixels': (648, 35)}
+{'angles': (0, -35), 'pixels': (648, 6)}
+{'angles': (0, -40), 'pixels': None}
+{'angles': (0, -5), 'pixels': (648, 277)}
+{'angles': (0, 0), 'pixels': (649, 335)}
+{'angles': (0, 10), 'pixels': (651, 430)}
+{'angles': (0, 15), 'pixels': (652, 475)}
+{'angles': (0, 20), 'pixels': (651, 527)}
+{'angles': (0, 25), 'pixels': (652, 572)}
+{'angles': (0, 30), 'pixels': (652, 614)}
+{'angles': (0, 35), 'pixels': (654, 658)}
+{'angles': (0, 5), 'pixels': (649, 377)}
+{'angles': (10, -10), 'pixels': (747, 235)}
+{'angles': (10, -15), 'pixels': (749, 178)}
+{'angles': (10, -20), 'pixels': (749, 137)}
+{'angles': (10, -25), 'pixels': (749, 89)}
+{'angles': (10, -30), 'pixels': (752, 38)}
+{'angles': (10, -35), 'pixels': (752, 12)}
+{'angles': (10, -40), 'pixels': None}
+{'angles': (10, -5), 'pixels': (746, 282)}
+{'angles': (10, 0), 'pixels': (747, 331)}
+{'angles': (10, 10), 'pixels': (748, 426)}
+{'angles': (10, 15), 'pixels': (747, 473)}
+{'angles': (10, 20), 'pixels': (750, 521)}
+{'angles': (10, 25), 'pixels': (753, 566)}
+{'angles': (10, 30), 'pixels': (750, 611)}
+{'angles': (10, 35), 'pixels': (752, 650)}
+{'angles': (10, 5), 'pixels': (748, 377)}
+{'angles': (15, -10), 'pixels': (803, 233)}
+{'angles': (15, -15), 'pixels': (803, 184)}
+{'angles': (15, -20), 'pixels': (805, 143)}
+{'angles': (15, -25), 'pixels': (805, 93)}
+{'angles': (15, -30), 'pixels': (808, 46)}
+{'angles': (15, -35), 'pixels': (810, 18)}
+{'angles': (15, -40), 'pixels': None}
+{'angles': (15, -5), 'pixels': (803, 277)}
+{'angles': (15, 0), 'pixels': (802, 330)}
+{'angles': (15, 10), 'pixels': (804, 426)}
+{'angles': (15, 15), 'pixels': (801, 470)}
+{'angles': (15, 20), 'pixels': (805, 515)}
+{'angles': (15, 25), 'pixels': (807, 562)}
+{'angles': (15, 30), 'pixels': (808, 600)}
+{'angles': (15, 35), 'pixels': (809, 641)}
+{'angles': (15, 5), 'pixels': (803, 376)}
+{'angles': (20, -10), 'pixels': (857, 237)}
+{'angles': (20, -15), 'pixels': (857, 187)}
+{'angles': (20, -20), 'pixels': (858, 148)}
+{'angles': (20, -25), 'pixels': (858, 97)}
+{'angles': (20, -30), 'pixels': (861, 56)}
+{'angles': (20, -35), 'pixels': (864, 24)}
+{'angles': (20, -40), 'pixels': None}
+{'angles': (20, -5), 'pixels': (855, 278)}
+{'angles': (20, 0), 'pixels': (853, 333)}
+{'angles': (20, 10), 'pixels': (853, 423)}
+{'angles': (20, 15), 'pixels': (854, 464)}
+{'angles': (20, 20), 'pixels': (859, 514)}
+{'angles': (20, 25), 'pixels': (858, 556)}
+{'angles': (20, 30), 'pixels': (860, 596)}
+{'angles': (20, 35), 'pixels': (862, 635)}
+{'angles': (20, 5), 'pixels': (853, 377)}
+{'angles': (25, -10), 'pixels': (908, 243)}
+{'angles': (25, -15), 'pixels': (910, 193)}
+{'angles': (25, -20), 'pixels': (910, 151)}
+{'angles': (25, -25), 'pixels': (913, 108)}
+{'angles': (25, -30), 'pixels': (918, 65)}
+{'angles': (25, -35), 'pixels': (920, 37)}
+{'angles': (25, -40), 'pixels': None}
+{'angles': (25, -5), 'pixels': (905, 285)}
+{'angles': (25, 0), 'pixels': (907, 330)}
+{'angles': (25, 10), 'pixels': (908, 420)}
+{'angles': (25, 15), 'pixels': (908, 460)}
+{'angles': (25, 20), 'pixels': (908, 508)}
+{'angles': (25, 25), 'pixels': (913, 546)}
+{'angles': (25, 30), 'pixels': (917, 585)}
+{'angles': (25, 35), 'pixels': (919, 621)}
+{'angles': (25, 5), 'pixels': (907, 372)}
+{'angles': (30, -10), 'pixels': (951, 248)}
+{'angles': (30, -15), 'pixels': (956, 194)}
+{'angles': (30, -20), 'pixels': (957, 160)}
+{'angles': (30, -25), 'pixels': (957, 113)}
+{'angles': (30, -30), 'pixels': (961, 77)}
+{'angles': (30, -35), 'pixels': (964, 50)}
+{'angles': (30, -40), 'pixels': None}
+{'angles': (30, -5), 'pixels': (950, 286)}
+{'angles': (30, 0), 'pixels': (951, 333)}
+{'angles': (30, 10), 'pixels': (951, 416)}
+{'angles': (30, 15), 'pixels': (951, 453)}
+{'angles': (30, 20), 'pixels': (953, 497)}
+{'angles': (30, 25), 'pixels': (954, 538)}
+{'angles': (30, 30), 'pixels': (956, 575)}
+{'angles': (30, 35), 'pixels': (962, 610)}
+{'angles': (30, 5), 'pixels': (948, 372)}
+{'angles': (35, -10), 'pixels': (996, 251)}
+{'angles': (35, -15), 'pixels': (1002, 204)}
+{'angles': (35, -20), 'pixels': (1001, 167)}
+{'angles': (35, -25), 'pixels': (1008, 125)}
+{'angles': (35, -30), 'pixels': (1010, 89)}
+{'angles': (35, -35), 'pixels': (1015, 64)}
+{'angles': (35, -40), 'pixels': None}
+{'angles': (35, -5), 'pixels': (997, 288)}
+{'angles': (35, 0), 'pixels': (996, 328)}
+{'angles': (35, 10), 'pixels': (994, 409)}
+{'angles': (35, 15), 'pixels': (998, 450)}
+{'angles': (35, 20), 'pixels': (998, 494)}
+{'angles': (35, 25), 'pixels': (1002, 527)}
+{'angles': (35, 30), 'pixels': (1004, 564)}
+{'angles': (35, 35), 'pixels': (1010, 599)}
+{'angles': (35, 5), 'pixels': (995, 367)}
+{'angles': (40, -10), 'pixels': (1058, 255)}
+{'angles': (40, -15), 'pixels': (1062, 216)}
+{'angles': (40, -20), 'pixels': (1064, 183)}
+{'angles': (40, -25), 'pixels': (1067, 141)}
+{'angles': (40, -30), 'pixels': (1072, 107)}
+{'angles': (40, -35), 'pixels': (1078, 87)}
+{'angles': (40, -40), 'pixels': None}
+{'angles': (40, -5), 'pixels': (1058, 289)}
+{'angles': (40, 0), 'pixels': (1058, 331)}
+{'angles': (40, 10), 'pixels': (1057, 405)}
+{'angles': (40, 15), 'pixels': (1059, 438)}
+{'angles': (40, 20), 'pixels': (1060, 476)}
+{'angles': (40, 25), 'pixels': (1063, 509)}
+{'angles': (40, 30), 'pixels': (1067, 541)}
+{'angles': (40, 35), 'pixels': (1071, 575)}
+{'angles': (40, 5), 'pixels': (1055, 366)}
+{'angles': (45, -10), 'pixels': (1117, 264)}
+{'angles': (45, -15), 'pixels': (1120, 226)}
+{'angles': (45, -20), 'pixels': (1123, 194)}
+{'angles': (45, -25), 'pixels': (1127, 159)}
+{'angles': (45, -30), 'pixels': (1132, 130)}
+{'angles': (45, -35), 'pixels': (1138, 110)}
+{'angles': (45, -40), 'pixels': None}
+{'angles': (45, -5), 'pixels': (1113, 291)}
+{'angles': (45, 0), 'pixels': (1115, 331)}
+{'angles': (45, 10), 'pixels': (1113, 395)}
+{'angles': (45, 15), 'pixels': (1114, 430)}
+{'angles': (45, 20), 'pixels': (1118, 465)}
+{'angles': (45, 25), 'pixels': (1118, 490)}
+{'angles': (45, 30), 'pixels': (1124, 518)}
+{'angles': (45, 35), 'pixels': (1125, 546)}
+{'angles': (45, 5), 'pixels': (1113, 362)}
+{'angles': (5, -10), 'pixels': (690, 234)}
+{'angles': (5, -15), 'pixels': (691, 179)}
+{'angles': (5, -20), 'pixels': (692, 135)}
+{'angles': (5, -25), 'pixels': (692, 83)}
+{'angles': (5, -30), 'pixels': (694, 35)}
+{'angles': (5, -35), 'pixels': (693, 6)}
+{'angles': (5, -40), 'pixels': None}
+{'angles': (5, -5), 'pixels': (691, 280)}
+{'angles': (5, 0), 'pixels': (693, 331)}
+{'angles': (5, 10), 'pixels': (691, 429)}
+{'angles': (5, 15), 'pixels': (694, 476)}
+{'angles': (5, 20), 'pixels': (696, 527)}
+{'angles': (5, 25), 'pixels': (692, 566)}
+{'angles': (5, 30), 'pixels': (695, 614)}
+{'angles': (5, 35), 'pixels': (697, 656)}
+{'angles': (5, 5), 'pixels': (690, 374)}
+{'angles': (50, -10), 'pixels': (1162, 270)}
+{'angles': (50, -15), 'pixels': (1165, 234)}
+{'angles': (50, -20), 'pixels': (1167, 209)}
+{'angles': (50, -25), 'pixels': (1171, 178)}
+{'angles': (50, -30), 'pixels': (1177, 149)}
+{'angles': (50, -35), 'pixels': (1180, 132)}
+{'angles': (50, -40), 'pixels': None}
+{'angles': (50, -5), 'pixels': (1161, 293)}
+{'angles': (50, 0), 'pixels': (1160, 329)}
+{'angles': (50, 10), 'pixels': (1161, 390)}
+{'angles': (50, 15), 'pixels': (1161, 417)}
+{'angles': (50, 20), 'pixels': (1164, 447)}
+{'angles': (50, 25), 'pixels': (1167, 473)}
+{'angles': (50, 30), 'pixels': (1168, 499)}
+{'angles': (50, 35), 'pixels': (1173, 526)}
+{'angles': (50, 5), 'pixels': (1160, 357)}
+{'angles': (55, -10), 'pixels': (1213, 277)}
+{'angles': (55, -15), 'pixels': (1215, 249)}
+{'angles': (55, -20), 'pixels': (1218, 226)}
+{'angles': (55, -25), 'pixels': (1224, 201)}
+{'angles': (55, -30), 'pixels': (1229, 177)}
+{'angles': (55, -35), 'pixels': (1230, 164)}
+{'angles': (55, -40), 'pixels': None}
+{'angles': (55, -5), 'pixels': (1211, 301)}
+{'angles': (55, 0), 'pixels': (1208, 327)}
+{'angles': (55, 10), 'pixels': (1209, 380)}
+{'angles': (55, 15), 'pixels': (1210, 405)}
+{'angles': (55, 20), 'pixels': (1212, 432)}
+{'angles': (55, 25), 'pixels': (1214, 452)}
+{'angles': (55, 30), 'pixels': (1216, 477)}
+{'angles': (55, 35), 'pixels': (1220, 499)}
+{'angles': (55, 5), 'pixels': (1208, 351)}
+{'angles': (60, -10), 'pixels': (1268, 290)}
+{'angles': (60, -15), 'pixels': (1272, 264)}
+{'angles': (60, -20), 'pixels': (1274, 249)}
+{'angles': (60, -25), 'pixels': (1278, 228)}
+{'angles': (60, -30), 'pixels': None}
+{'angles': (60, -35), 'pixels': None}
+{'angles': (60, -40), 'pixels': None}
+{'angles': (60, -5), 'pixels': (1266, 306)}
+{'angles': (60, 0), 'pixels': (1264, 330)}
+{'angles': (60, 10), 'pixels': (1265, 370)}
+{'angles': (60, 15), 'pixels': (1264, 387)}
+{'angles': (60, 20), 'pixels': (1265, 410)}
+{'angles': (60, 25), 'pixels': (1266, 424)}
+{'angles': (60, 30), 'pixels': (1267, 446)}
+{'angles': (60, 35), 'pixels': (1271, 462)}
+{'angles': (60, 5), 'pixels': (1265, 348)}
+{'angles': (65, -10), 'pixels': None}
+{'angles': (65, -15), 'pixels': None}
+{'angles': (65, -20), 'pixels': None}
+{'angles': (65, -25), 'pixels': None}
+{'angles': (65, -30), 'pixels': None}
+{'angles': (65, -35), 'pixels': None}
+{'angles': (65, -40), 'pixels': None}
+{'angles': (65, -5), 'pixels': None}
+{'angles': (65, 0), 'pixels': None}
+{'angles': (65, 10), 'pixels': None}
+{'angles': (65, 15), 'pixels': None}
+{'angles': (65, 20), 'pixels': None}
+{'angles': (65, 25), 'pixels': None}
+{'angles': (65, 30), 'pixels': None}
+{'angles': (65, 35), 'pixels': None}
+{'angles': (65, 5), 'pixels': None}
+{'angles': (70, -10), 'pixels': None}
+{'angles': (70, -15), 'pixels': None}
+{'angles': (70, -20), 'pixels': None}
+{'angles': (70, -25), 'pixels': None}
+{'angles': (70, -30), 'pixels': None}
+{'angles': (70, -35), 'pixels': None}
+{'angles': (70, -40), 'pixels': None}
+{'angles': (70, -5), 'pixels': None}
+{'angles': (70, 0), 'pixels': None}
+{'angles': (70, 10), 'pixels': None}
+{'angles': (70, 15), 'pixels': None}
+{'angles': (70, 20), 'pixels': None}
+{'angles': (70, 25), 'pixels': None}
+{'angles': (70, 30), 'pixels': None}
+{'angles': (70, 35), 'pixels': None}
+{'angles': (70, 5), 'pixels': None}
