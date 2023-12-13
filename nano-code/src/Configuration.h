@@ -7,7 +7,7 @@
 // serial comms baudrate
 #define BAUDRATE 115200
 //command buffer size
-#define CMD_BUF_LEN 8L
+#define CMD_BUF_LEN 50L
 
 //* motion limits and scale factors and stuff
 
